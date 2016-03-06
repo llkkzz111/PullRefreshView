@@ -28,6 +28,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
+import com.ybao.pullrefreshview.utils.CanPullUtil;
 import com.ybao.pullrefreshview.utils.FooterLayoutType;
 import com.ybao.pullrefreshview.utils.HeaderLayoutType;
 import com.ybao.pullrefreshview.utils.Loadable;
@@ -85,6 +86,7 @@ public class RGPullRefreshLayout extends PullRefreshLayout {
         if (child instanceof Refreshable && mHeader == null) {
             mHeader = (Refreshable) child;
             mHeader.setPullRefreshLayout(this);
+            setMaxHeaderDistance(mHeader.getMaxDistance());
             headerLayoutType = getLayoutType(mHeader, HeaderLayoutType.class);
             if (headerLayoutType == LAYOUT_DRAWER) {
                 addViewInFrameLayout(child, index, params);
@@ -93,13 +95,14 @@ public class RGPullRefreshLayout extends PullRefreshLayout {
         } else if (child instanceof Loadable && mFooter == null) {
             mFooter = (Loadable) child;
             mFooter.setPullRefreshLayout(this);
+            setMaxFooterDistance(mFooter.getMaxDistance());
             footerLayoutType = getLayoutType(mFooter, FooterLayoutType.class);
             if (footerLayoutType == LAYOUT_DRAWER) {
                 addViewInFrameLayout(child, index, params);
                 return;
             }
-        } else if (child instanceof Pullable && mPullView == null) {
-            mPullView = (Pullable) child;
+        } else if (mPullView == null && (pullable = CanPullUtil.getPullAble(child)) != null) {
+            mPullView = child;
             if (headerLayoutType == LAYOUT_SCROLLER || footerLayoutType == LAYOUT_SCROLLER) {
                 addScrollInFrameLayout(child, index, params);
                 return;
@@ -123,14 +126,14 @@ public class RGPullRefreshLayout extends PullRefreshLayout {
         int height = getHeight();
         if (mHeader != null && headerLayoutType == LAYOUT_SCROLLER) {
             View mHeaderView = (View) mHeader;
-            headerSpanHeight = hasHeader ? mHeader.getSpanHeight() : 0;
-            headerHeight = hasHeader ? mHeaderView.getHeight() : 0;
+            headerSpanHeight = mHeader.getSpanHeight();
+            headerHeight = mHeaderView.getHeight();
             mHeaderView.layout(mHeaderView.getLeft(), 0, mHeaderView.getRight(), headerHeight);
         }
         if (mFooter != null && footerLayoutType == LAYOUT_SCROLLER) {
             View mFooterView = (View) mFooter;
-            footerSpanHeight = hasFooter ? mFooter.getSpanHeight() : 0;
-            footerHeight = hasFooter ? mFooterView.getHeight() : 0;
+            footerSpanHeight = mFooter.getSpanHeight();
+            footerHeight = mFooterView.getHeight();
             mFooterView.layout(mFooterView.getLeft(), height - footerHeight, mFooterView.getRight(), height);
         }
 

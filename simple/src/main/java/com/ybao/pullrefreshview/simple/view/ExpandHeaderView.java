@@ -9,8 +9,8 @@ import android.view.ViewGroup;
 import com.nineoldandroids.animation.ObjectAnimator;
 import com.nineoldandroids.view.ViewHelper;
 import com.ybao.pullrefreshview.layout.BaseHeaderView;
-import com.ybao.pullrefreshview.layout.FlingLayout;
 import com.ybao.pullrefreshview.layout.PullRefreshLayout;
+import com.ybao.pullrefreshview.layout.FlingLayout;
 import com.ybao.pullrefreshview.layout.RGPullRefreshLayout;
 import com.ybao.pullrefreshview.simple.R;
 import com.ybao.pullrefreshview.simple.utils.AnimUtil;
@@ -50,9 +50,8 @@ public class ExpandHeaderView extends BaseHeaderView {
     }
 
     @Override
-    public void setPullRefreshLayout(PullRefreshLayout refreshLayout) {
-        super.setPullRefreshLayout(refreshLayout);
-        refreshLayout.setMaxDistance(300);
+    public int getMaxDistance() {
+        return 300;
     }
 
     @Override

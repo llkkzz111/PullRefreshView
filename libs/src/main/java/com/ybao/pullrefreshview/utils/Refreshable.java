@@ -21,12 +21,14 @@
  */
 package com.ybao.pullrefreshview.utils;
 
-import com.ybao.pullrefreshview.layout.FlingLayout;
 import com.ybao.pullrefreshview.layout.PullRefreshLayout;
+import com.ybao.pullrefreshview.layout.FlingLayout;
 
 public interface Refreshable extends FlingLayout.OnScrollListener {
 
-    public void setPullRefreshLayout(PullRefreshLayout refreshLayout);
+    void setPullRefreshLayout(PullRefreshLayout refreshLayout);
 
-    public int getSpanHeight();
+    int getSpanHeight();
+
+    int getMaxDistance();
 }

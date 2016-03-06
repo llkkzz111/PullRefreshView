@@ -1,24 +1,3 @@
-/**
- * Copyright 2015 Pengyuan-Jiang
- * <p/>
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * <p/>
- * http://www.apache.org/licenses/LICENSE-2.0
- * <p/>
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- * <p/>
- * Author：Ybao on 2015/11/5 ‏‎17:53
- * <p/>
- * QQ: 392579823
- * <p/>
- * Email：392579823@qq.com
- */
 package com.ybao.pullrefreshview.layout;
 
 import android.content.Context;
@@ -29,13 +8,8 @@ import android.view.ViewGroup;
 import com.ybao.pullrefreshview.utils.Loadable;
 import com.ybao.pullrefreshview.utils.Refreshable;
 
-
 /**
- * 经典下拉刷新，上拉加载的通用控件（可用于任意控件 如 ListView GridView WebView ScrollView）
- * <p/>
- * 弹性下（上）拉，滑倒顶（低）部无需松开即可继续拉动
- *
- * @author Ybao
+ * Created by ybao on 16/3/6.
  */
 public class PullRefreshLayout extends FlingLayout {
 
@@ -45,8 +19,6 @@ public class PullRefreshLayout extends FlingLayout {
     protected int footerHeight = 0;
     protected Loadable mFooter;
     protected Refreshable mHeader;
-    protected boolean hasHeader = true;
-    protected boolean hasFooter = true;
 
     public PullRefreshLayout(Context context) {
         this(context, null);
@@ -68,60 +40,43 @@ public class PullRefreshLayout extends FlingLayout {
         } else if (mFooter != null && offsetTop >= footerSpanHeight) {
             startScrollTo(offsetTop, footerSpanHeight);
         } else {
-            super.fling(offsetTop);
+            startScrollTo(offsetTop, 0);
         }
     }
 
 
     @Override
     protected void onScroll(int y) {
-        if (mHeader != null && y <= 0 && hasHeader) {
-            mHeader.onScroll(this, y);
-        }
-        if (mFooter != null && y >= 0 && hasFooter) {
+        if (mFooter != null && y >= 0) {
             mFooter.onScroll(this, y);
+        }
+        if (mHeader != null && y <= 0) {
+            mHeader.onScroll(this, y);
         }
     }
 
     @Override
     protected void onScrollChange(int state, int y) {
-        if (mHeader != null && hasHeader) {
+        if (mHeader != null) {
             mHeader.onScrollChange(this, state, y);
         }
-        if (mFooter != null && hasFooter) {
+        if (mFooter != null) {
             mFooter.onScrollChange(this, state, y);
         }
     }
 
-
-    public void openHeader() {
-        int offsetTop = this.getOffsetTop();
-        if (offsetTop == 0) {
-            this.startScrollTo(0, -this.headerSpanHeight);
-        }
-
-    }
-
-    public void openFooter() {
-        int offsetTop = this.getOffsetTop();
-        if (offsetTop == 0) {
-            this.startScrollTo(0, this.footerSpanHeight);
-        }
-
-    }
-
     public void closeHeader() {
         int offsetTop = getOffsetTop();
-        if (offsetTop < headerBaseLine) {
-            startScrollTo(offsetTop, headerBaseLine);
+        if (offsetTop < 0) {
+            startScrollTo(offsetTop, 0);
         }
 
     }
 
     public void closeFooter() {
         int offsetTop = getOffsetTop();
-        if (offsetTop > FooterBaseLine) {
-            startScrollTo(offsetTop, FooterBaseLine);
+        if (offsetTop > 0) {
+            startScrollTo(offsetTop, 0);
         }
     }
 
@@ -130,9 +85,11 @@ public class PullRefreshLayout extends FlingLayout {
         if (child instanceof Refreshable && mHeader == null) {
             mHeader = (Refreshable) child;
             mHeader.setPullRefreshLayout(this);
+            setMaxHeaderDistance(mHeader.getMaxDistance());
         } else if (child instanceof Loadable && mFooter == null) {
             mFooter = (Loadable) child;
             mFooter.setPullRefreshLayout(this);
+            setMaxFooterDistance(mFooter.getMaxDistance());
         }
         super.addView(child, index, params);
     }
@@ -143,25 +100,15 @@ public class PullRefreshLayout extends FlingLayout {
         int height = getHeight();
         if (mHeader != null) {
             View mHeaderView = (View) mHeader;
-            headerSpanHeight = hasHeader ? mHeader.getSpanHeight() : 0;
-            headerHeight = hasHeader ? mHeaderView.getHeight() : 0;
+            headerSpanHeight = mHeader.getSpanHeight();
+            headerHeight = mHeaderView.getHeight();
             mHeaderView.layout(mHeaderView.getLeft(), -headerHeight, mHeaderView.getRight(), 0);
         }
         if (mFooter != null) {
             View mFooterView = (View) mFooter;
-            footerSpanHeight = hasFooter ? mFooter.getSpanHeight() : 0;
-            footerHeight = hasFooter ? mFooterView.getHeight() : 0;
+            footerSpanHeight = mFooter.getSpanHeight();
+            footerHeight = mFooterView.getHeight();
             mFooterView.layout(mFooterView.getLeft(), height, mFooterView.getRight(), height + footerHeight);
         }
-    }
-
-    public void setHasFooter(boolean hasFooter) {
-        this.hasFooter = hasFooter;
-        requestLayout();
-    }
-
-    public void setHasHeader(boolean hasHeader) {
-        this.hasHeader = hasHeader;
-        requestLayout();
     }
 }

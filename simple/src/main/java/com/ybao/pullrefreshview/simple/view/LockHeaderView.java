@@ -11,8 +11,8 @@ import android.view.View;
 import com.nineoldandroids.animation.ObjectAnimator;
 import com.nineoldandroids.view.ViewHelper;
 import com.ybao.pullrefreshview.layout.BaseHeaderView;
-import com.ybao.pullrefreshview.layout.FlingLayout;
 import com.ybao.pullrefreshview.layout.PullRefreshLayout;
+import com.ybao.pullrefreshview.layout.FlingLayout;
 import com.ybao.pullrefreshview.layout.RGPullRefreshLayout;
 import com.ybao.pullrefreshview.simple.R;
 import com.ybao.pullrefreshview.simple.utils.AnimUtil;
@@ -60,9 +60,8 @@ public class LockHeaderView extends BaseHeaderView {
     }
 
     @Override
-    public void setPullRefreshLayout(PullRefreshLayout refreshLayout) {
-        super.setPullRefreshLayout(refreshLayout);
-        refreshLayout.setMaxDistance(400);
+    public int getMaxDistance() {
+        return 400;
     }
 
     @Override

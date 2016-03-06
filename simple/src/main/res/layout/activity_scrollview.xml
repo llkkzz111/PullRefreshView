@@ -1,111 +1,134 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.ybao.pullrefreshview.layout.PullRefreshLayout
-    android:id="@+id/root"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/colorPrimary">
+    android:layout_height="match_parent">
 
-    <com.ybao.pullrefreshview.simple.view.NormalHeaderView
-        android:id="@+id/header"
+    <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content">
 
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            android:theme="@style/AppTheme.AppBarOverlay"
+            app:layout_scrollFlags="scroll|enterAlwaysCollapsed"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
 
-    <com.ybao.pullrefreshview.simple.view.NormalFooterView
-        android:id="@+id/footer"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+    </android.support.design.widget.AppBarLayout>
 
-    <com.ybao.pullrefreshview.view.PullableScrollView
+    <com.ybao.pullrefreshview.layout.PullRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/root"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@android:color/white">
+        android:background="@color/colorPrimary"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <LinearLayout
+        <com.ybao.pullrefreshview.simple.view.NormalHeaderView
+            android:id="@+id/header"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="wrap_content" />
 
 
-            <Button
+        <com.ybao.pullrefreshview.simple.view.NormalFooterView
+            android:id="@+id/footer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/white"
+            android:nestedScrollingEnabled="true">
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:text="1"
-                android:layout_height="100.0dip"/>
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="100.0dip"
-                android:gravity="center"
-                android:text="2"/>
 
-            <Button
-                android:layout_width="match_parent"
-                android:text="3"
-                android:layout_height="100.0dip"/>
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="100.0dip"
+                    android:text="1" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="100.0dip"
-                android:gravity="center"
-                android:text="4"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="100.0dip"
+                    android:gravity="center"
+                    android:text="2" />
 
-            <Button
-                android:layout_width="match_parent"
-                android:text="5"
-                android:layout_height="100.0dip"/>
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="100.0dip"
+                    android:text="3" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="100.0dip"
-                android:gravity="center"
-                android:text="6"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="100.0dip"
+                    android:gravity="center"
+                    android:text="4" />
 
-            <Button
-                android:layout_width="match_parent"
-                android:text="7"
-                android:layout_height="100.0dip"/>
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="100.0dip"
+                    android:text="5" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="100.0dip"
-                android:gravity="center"
-                android:text="8"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="100.0dip"
+                    android:gravity="center"
+                    android:text="6" />
 
-            <Button
-                android:layout_width="match_parent"
-                android:text="9"
-                android:layout_height="100.0dip"/>
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="100.0dip"
+                    android:text="7" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="100.0dip"
-                android:gravity="center"
-                android:text="10"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="100.0dip"
+                    android:gravity="center"
+                    android:text="8" />
 
-            <Button
-                android:layout_width="match_parent"
-                android:text="11"
-                android:layout_height="100.0dip"/>
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="100.0dip"
+                    android:text="9" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="100.0dip"
-                android:gravity="center"
-                android:text="12"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="100.0dip"
+                    android:gravity="center"
+                    android:text="10" />
 
-            <Button
-                android:layout_width="match_parent"
-                android:text="13"
-                android:layout_height="100.0dip"/>
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="100.0dip"
+                    android:text="11" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="100.0dip"
-                android:gravity="center"
-                android:text="14"/>
-        </LinearLayout>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="100.0dip"
+                    android:gravity="center"
+                    android:text="12" />
 
-    </com.ybao.pullrefreshview.view.PullableScrollView>
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="100.0dip"
+                    android:text="13" />
 
-</com.ybao.pullrefreshview.layout.PullRefreshLayout>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="100.0dip"
+                    android:gravity="center"
+                    android:text="14" />
+            </LinearLayout>
+
+        </ScrollView>
+
+    </com.ybao.pullrefreshview.layout.PullRefreshLayout>
+
+</android.support.design.widget.CoordinatorLayout>

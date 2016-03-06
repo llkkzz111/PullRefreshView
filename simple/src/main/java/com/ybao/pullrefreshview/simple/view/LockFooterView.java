@@ -12,6 +12,7 @@ import com.nineoldandroids.animation.ObjectAnimator;
 import com.nineoldandroids.view.ViewHelper;
 import com.ybao.pullrefreshview.layout.BaseFooterView;
 import com.ybao.pullrefreshview.layout.FlingLayout;
+import com.ybao.pullrefreshview.layout.PullRefreshLayout;
 import com.ybao.pullrefreshview.layout.RGPullRefreshLayout;
 import com.ybao.pullrefreshview.simple.R;
 import com.ybao.pullrefreshview.simple.utils.AnimUtil;
@@ -58,6 +59,10 @@ public class LockFooterView extends BaseFooterView {
         paint.setStyle(Paint.Style.FILL);
     }
 
+    @Override
+    public int getMaxDistance() {
+        return 400;
+    }
 
     @Override
     public void onScroll(FlingLayout flingLayout, int y) {

@@ -1,5 +1,4 @@
-<merge
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
 
     <View
         android:layout_width="1dp"
@@ -7,13 +6,13 @@
         android:layout_alignTop="@+id/load_box"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="42dp"
-        android:background="#272636"/>
+        android:background="#272636" />
 
     <RelativeLayout
         android:id="@+id/load_box"
         android:layout_width="match_parent"
-        android:layout_alignParentTop="true"
-        android:layout_height="60dp">
+        android:layout_height="60dp"
+        android:layout_alignParentTop="true">
 
 
         <ImageView
@@ -21,7 +20,7 @@
             android:layout_width="32dip"
             android:layout_height="32dip"
             android:layout_centerInParent="true"
-            android:src="@mipmap/id_load_b"/>
+            android:src="@mipmap/id_load_b" />
 
         <ImageView
             android:id="@+id/state"
@@ -29,6 +28,6 @@
             android:layout_height="32dp"
             android:layout_centerInParent="true"
             android:src="@mipmap/id_load_clone_b"
-            android:visibility="invisible"/>
+            android:visibility="invisible" />
     </RelativeLayout>
 </merge>

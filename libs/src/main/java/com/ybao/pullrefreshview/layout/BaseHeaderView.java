@@ -95,7 +95,9 @@ public abstract class BaseHeaderView extends RelativeLayout implements Refreshab
             public void run() {
                 isLockState = false;
                 setState(NONE);
-                hide();
+                if (refreshLayout != null) {
+                    refreshLayout.closeHeader();
+                }
             }
         }, 800);
     }
@@ -108,21 +110,12 @@ public abstract class BaseHeaderView extends RelativeLayout implements Refreshab
         onStateChange(state);
     }
 
+    public int getMaxDistance() {
+        return 0;
+    }
+
     public int getType() {
         return stateType;
-    }
-
-
-    public void show() {
-        if (this.refreshLayout != null) {
-            this.refreshLayout.openHeader();
-        }
-    }
-
-    public void hide() {
-        if (this.refreshLayout != null) {
-            refreshLayout.closeHeader();
-        }
     }
 
     protected abstract void onStateChange(int state);
@@ -136,4 +129,5 @@ public abstract class BaseHeaderView extends RelativeLayout implements Refreshab
     public void setOnRefreshListener(OnRefreshListener onRefreshListener) {
         this.onRefreshListener = onRefreshListener;
     }
+
 }
