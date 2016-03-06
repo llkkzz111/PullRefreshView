@@ -1,22 +1,22 @@
 /**
  * Copyright 2015 Pengyuan-Jiang
- * <p>
+ * <p/>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * <p>
+ * <p/>
  * http://www.apache.org/licenses/LICENSE-2.0
- * <p>
+ * <p/>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * <p>
+ * <p/>
  * Author：Ybao on 2015/11/5  ‏‎17:49
- * <p>
+ * <p/>
  * QQ: 392579823
- * <p>
+ * <p/>
  * Email：392579823@qq.com
  */
 package com.ybao.pullrefreshview.layout;
@@ -55,6 +55,8 @@ public class FlingLayout extends FrameLayout {
     protected int maxDistance = 0;
     protected int version;
     int mPointerId;
+    protected int headerBaseLine = 0;
+    protected int FooterBaseLine = 0;
 
     public FlingLayout(Context context) {
         this(context, null);
@@ -100,7 +102,7 @@ public class FlingLayout extends FrameLayout {
                 downX = x;
                 if (!mScroller.isFinished()) {
                     mScroller.abortAnimation();
-                    if (offsetTop != 0) {
+                    if (offsetTop != headerBaseLine && offsetTop != FooterBaseLine) {
                         setState(SCROLLING, offsetTop);//
                         return true;
                     }
@@ -138,14 +140,21 @@ public class FlingLayout extends FrameLayout {
                         //当不在0,0处
                         ev.setAction(MotionEvent.ACTION_CANCEL);//屏蔽原事件
 
-                        if ((offsetTop < 0 && offsetTop - dataY >= 0) || (offsetTop > 0 && offsetTop - dataY <= 0)) {
+                        if ((offsetTop < 0 && offsetTop - dataY >= 0)) {
                             //在0,0附近浮动
+                            ev.setAction(MotionEvent.ACTION_DOWN);
+                            scrollTo(0, 0);
+                        } else if ((offsetTop > 0 && offsetTop - dataY <= 0)) {
                             ev.setAction(MotionEvent.ACTION_DOWN);
                             scrollTo(0, 0);
                         } else if ((offsetTop > 0 && dataY < 0) || (offsetTop < 0 && dataY > 0)) {
                             //是否超过最大距离
                             if (maxDistance == 0 || Math.abs(offsetTop) < maxDistance) {
-                                scrollBy(0, -dataY / 2);
+                                if (offsetTop > FooterBaseLine || offsetTop < headerBaseLine) {
+                                    scrollBy(0, -dataY / 2);
+                                } else {
+                                    scrollBy(0, -dataY);
+                                }
                             } else if (offsetTop > maxDistance) {
                                 scrollTo(0, maxDistance);
                             } else if (offsetTop < -maxDistance) {
@@ -204,7 +213,11 @@ public class FlingLayout extends FrameLayout {
     }
 
     protected void fling(int offsetTop) {
-        startScrollTo(offsetTop, 0);
+        if (offsetTop > FooterBaseLine) {
+            startScrollTo(offsetTop, FooterBaseLine);
+        } else if (offsetTop < headerBaseLine) {
+            startScrollTo(offsetTop, headerBaseLine);
+        }
     }
 
 
@@ -287,15 +300,25 @@ public class FlingLayout extends FrameLayout {
 
     public void setCanPullDown(boolean canPullDown) {
         this.canPullDown = canPullDown;
-        if (!canPullDown && getOffsetTop() < 0) {
-            scrollTo(getScrollX(), 0);
+        int offsetTop = getOffsetTop();
+        if (!canPullDown && offsetTop < headerBaseLine) {
+            startScrollTo(offsetTop, headerBaseLine);
         }
     }
 
     public void setCanPullUp(boolean canPullUp) {
         this.canPullUp = canPullUp;
-        if (!canPullUp && getOffsetTop() > 0) {
-            scrollTo(getScrollX(), 0);
+        int offsetTop = getOffsetTop();
+        if (!canPullUp && offsetTop > FooterBaseLine) {
+            startScrollTo(offsetTop, FooterBaseLine);
         }
+    }
+
+    public void setHeaderBaseLine(int headerBaseLine) {
+        this.headerBaseLine = headerBaseLine;
+    }
+
+    public void setFooterBaseLine(int footerBaseLine) {
+        FooterBaseLine = footerBaseLine;
     }
 }

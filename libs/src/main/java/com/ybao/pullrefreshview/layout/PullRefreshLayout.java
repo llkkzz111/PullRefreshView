@@ -68,7 +68,7 @@ public class PullRefreshLayout extends FlingLayout {
         } else if (mFooter != null && offsetTop >= footerSpanHeight) {
             startScrollTo(offsetTop, footerSpanHeight);
         } else {
-            startScrollTo(offsetTop, 0);
+            super.fling(offsetTop);
         }
     }
 
@@ -112,16 +112,16 @@ public class PullRefreshLayout extends FlingLayout {
 
     public void closeHeader() {
         int offsetTop = getOffsetTop();
-        if (offsetTop < 0) {
-            startScrollTo(offsetTop, 0);
+        if (offsetTop < headerBaseLine) {
+            startScrollTo(offsetTop, headerBaseLine);
         }
 
     }
 
     public void closeFooter() {
         int offsetTop = getOffsetTop();
-        if (offsetTop > 0) {
-            startScrollTo(offsetTop, 0);
+        if (offsetTop > FooterBaseLine) {
+            startScrollTo(offsetTop, FooterBaseLine);
         }
     }
 
